@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- {{ person.name }}
+		{{ person.age }} -->
+		{{ msg }}
+	</div>
+	<span>name</span><span class="name"></span>
+	<script>
+		var vm = new Vue({
+			el:'#app',
+			data:{
+				person:{
+					name: 'sun'
+				},
+				msg:'good study'
+			}
+		});
+		vm.msg = '111';
+		console.log(vm.msg,vm.$el.innerText);
+		vm.msg = '222';
+		console.log(vm.msg,vm.$el.innerText);
+		vm.msg = '333';
+		console.log(vm.msg,vm.$el.innerText);
+
+		// setTimeout(() => {
+		// 	console.log(vm.msg,vm.$el.innerText)
+		// }, 0);
+
+
+		vm.$nextTick(function(){
+			console.log(this,this === vm);
+			console.log(vm.msg,vm.$el.innerText)
+		});
+
+		Vue.nextTick(function(){
+			console.log(this);
+			console.log(vm.msg,vm.$el.innerText)
+		});
+//支持Promise
+		vm.$nextTick().then( function(){
+			console.log(this);
+			console.log(vm.msg,vm.$el.innerText)
+		});
+
+		Vue.nextTick().then( function(){
+			console.log(this);
+			console.log(vm.msg,vm.$el.innerText)
+		});
+
+		// nextTick内部实现（在支持的情况下 微任务 > 宏任务 ）
+		// if(typeof Promise !== 'undefined'){
+
+		// }if(typeof MutationObserver !== 'undefined'){
+
+		// }if(typeof setImmidiate !== 'undefined'){   //IE
+
+		// }if(typeof setTimeout !== 'undefined'){
+		// }
+	</script>
+</body>
+</html>
