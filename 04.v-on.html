@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<style>
+	#app{
+		background-color: #eee;
+	}
+
+</style>
+<body>
+	<div id="app" >
+		<!-- <button v-on:click='handleClick'>点击 +1</button> -->
+		<!-- <button @click='handleClick'>点击 +1</button>
+		<p> 按钮被点击了{{ counter }}次 </p> -->
+		<button @click='handleClick(5,$event)'>点击 +1</button>
+		<p> 按钮被点击了{{ counter }}次 </p>
+		<input type="text" @[event]='handler'>
+		<div style='background-color:skyblue; width:100px; height:100px;' @click.self='alert("father")'>
+			<div :style='styleObject' @click='alert("son")'></div>
+		</div>
+		<div style='background-color:lightgreen; width:50px; height:80px;' @click.once='alert("once")'></div>
+		<hr>
+		<input type="text" @keyup.enter='alert("enter")'>
+		<input type="text" @keyup.control='alert("control")'>
+		<input type="text" @keyup.ctrl.enter='alert("ctrl.enter")'>
+	</div>
+	<script>
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				counter: 0,
+				event: 'click',
+				styleObject:{
+					backgroundColor: 'pink',
+					width: 50 + 'px',
+					height: 50 + 'px'
+				}
+				// event: 'blur'
+			},
+			methods: {
+				handleClick(num,e){
+					this.counter ++;
+					console.log(num,e.target);
+				},
+				handler(){
+					console.log('handler')
+				},
+				alert(msg){
+					console.log(msg)
+				}
+			}
+		})
+	</script>
+</body>
+</html>

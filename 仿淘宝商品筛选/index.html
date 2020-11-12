@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../vue.js"></script>
+	<link rel="stylesheet" href="index.css">
+</head>
+<body>
+	<div id="app">
+		<div class="goods" v-for='(good,goodIndex) in goodsList' :key='good.id'>
+			<div class="title"> {{ good.title }} </div>
+			<ul class="type-list">
+				<li class="type" 
+				v-for='(type,typeIndex) in good.typeList' :key='type'
+				@click='choose(type,typeIndex,good,goodIndex)'
+				:class="{ active: typeIndex == good.index }"> {{ type }} </li>
+			</ul>
+		</div>
+		<div class="choose-type">
+			<div>已选条件：</div>
+			<span class="no-goods" v-if='noSelected'>暂时没有选择过滤的条件</span>
+			<ul class="selected-list">
+				<li v-for='(selected,selectedIndex) in selectedObj' :key='selected'> {{ selected }} 
+					<span class="delete-good" @click='canaleChoose(selected,selectedIndex)'>x</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script>
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				goodsList: [
+				  {
+				    title: '上装',
+				    typeList: ['全部', '针织衫', '毛呢外套', 'T恤', '羽绒服', '棉衣', '卫衣', '风衣' ],
+				    id: 1,
+				  },
+				  {
+				    title: '裤装',
+				    typeList: ['全部', '牛仔裤', '小脚/铅笔裤', '休闲裤' ,'打底裤', '哈伦裤'],
+				    id: 2,
+				  },
+				  {
+				    title: '裙装',
+				    typeList: ['全部', '连衣裙', '半身裙', '长袖连衣裙', '中长款连衣裙'],
+				    id: 3,
+				  }
+				],
+				selectedObj:{},
+				noSelected: true ,
+			},
+			methods:{
+				choose(type,typeIndex,good,goodIndex){
+					good.index = typeIndex;
+					if(type !== '全部'){
+						vm.$set(this.selectedObj,goodIndex,type);
+						this.noSelected = false;
+					}else{
+						vm.$delete(this.selectedObj,goodIndex);
+						this.changeNoSelected();
+					}
+				},
+				canaleChoose(selected,selectedIndex){
+					this.goodsList[selectedIndex].index = 0;
+					vm.$delete(this.selectedObj,selectedIndex);
+					this.changeNoSelected();
+				},
+				changeNoSelected(){
+					this.noSelected = JSON.stringify(this.selectedObj) === '{}' ? true : false;
+				}
+			}
+		})
+		// 通过$set方法添加index属性，记录active状态的type
+		vm.goodsList.forEach( item => {
+			vm.$set(item,'index',0);
+		});
+	</script>
+</body>
+</html>

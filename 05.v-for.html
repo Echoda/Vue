@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<ul>
+			<li v-for='(person,index) in persons' :key='person.name'> {{ person.name }}--{{ person.age }} <button @click='move(index)'>下移</button></li>
+		</ul>
+		<ul>
+			<li v-for='(value,key,index) in obj'> {{ key }}:{{ value }} 索引：{{ index }}</li>
+		</ul>
+		<ul>
+			<li v-for='num in 10'> {{num}}</li>
+		</ul>
+		<ul>
+			<li v-for='char in "string"'> {{char}}</li>
+		</ul>
+		<template v-for='person in persons'>
+			<li> {{ person.name }} </li>
+			<li> hhh </li>
+		</template>
+		<button @click='show=!show'> {{ show ? '显示':'隐藏'}} </button>
+		<input type="text" v-if='show' :key='"a"'>
+		<input type="text" v-else :key='"b"'>
+	</div>
+	<script>
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				persons: [
+				{name:'sunny',age:18},
+				{name:'eureka',age:19},
+				{name:'vesper',age:21},
+				{name:'echo',age:20}
+				],
+				obj:{
+					name:'sun',
+					age: 18,
+					sex:'male'
+				},
+				show:true
+			},
+			methods:{
+				move(index){
+					const removeItem = this.persons.splice(index,1);
+					console.log(removeItem);
+					this.persons.splice(index+1,0,...removeItem);
+				}
+			}
+		})
+	</script>
+</body>
+</html>

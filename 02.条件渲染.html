@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<p v-if='msg'> v-if </p>
+		<p v-else-if='msg1'> v-else-if 1 </p>
+		<p v-else-if='msg2'> v-else-if 2</p>
+		<p v-else='msg3'> v-else </p>
+		<template v-if='msg'>
+			<p>hh</p>
+			<p>hh</p>
+			<p>hh</p>
+			<p>hh</p>
+		</template>
+		<p v-show='msg'>happy</p>
+
+	</div>
+	<script>
+		const vm = new Vue({
+			el:'#app',
+			data:{
+				msg:'',
+				msg1:0,
+				msg2:'',
+				msg3:true
+			}
+		});
+
+	</script>
+</body>
+</html>

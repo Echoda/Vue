@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<img v-bind:src="imgSrc" alt="">
+		<p v-bind:["uname"]='name'></p>
+		<p v-bind='{name:"lan",age:3}'></p>
+		<P :class='classA'></P>
+		<P :class='[classA,classB]'></P>
+		<P :class='{classA:isA,classB:isB}' class='originClass'></P>
+		<P :class='[classC,{classA:isA,classB:isB}]'></P>
+		<P :class='[isActive?activeClass:errorClass]'></P>
+		<p :style='{fontSize: 30 + "px",color: "orange"}'>绑定样式</p>
+		<p :style='styleObject1'>绑定样式</p>
+		<p :style='[styleObject1,styleObject2]'>绑定样式</p>
+
+	</div>
+	<script>
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				name:'sunny',
+				age:18,
+				// imgSrc: './嗯.jpg'
+				imgSrc:'./0.jpg',
+				classA:'classA',
+				classB:'classB',
+				classC:'classC',
+				isA:'',
+				isB:3,
+				isC:true,
+				isActive:9,
+				activeClass:'activeClass',
+				errorClass:'errorClass',
+				styleObject1:{
+					color:'pink',
+					// backgroundColor:'skyblue'
+					'background-color':'skyblue'
+				},
+				styleObject2:{
+					fontSize: 30 + 'px',
+					fontWeight: 700
+				}
+			}
+		})
+	</script>
+</body>
+</html>
