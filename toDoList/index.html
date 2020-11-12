@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../vue.js"></script>
+	<link rel="stylesheet" href="index.css">
+</head>
+<body>
+	<div id="app">
+		<div class="header">
+			<div class="container">
+				<div class="logo">toDoList</div>
+				<div class="input-area">
+					<input type="text" @blur='handleInput' :value='curText'>
+					<button @click='addTask'>添加</button>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<h2>
+				<span>正在进行</span>
+				<div class="sum"  v-cloak> {{ doingList.length }} </div>
+			</h2>
+			<ul class="doingList">
+				<li v-for='(task,taskIndex) in doingList' :key='task.id'>
+					<div>
+						<input type="checkbox" @change='check(taskIndex,doingList,"doing")'>
+						<span v-cloak> {{ task.text }} </span>
+					</div>
+					<button @click='deleteTask(taskIndex,doingList)'>删除</button>
+				</li>
+			</ul>
+			<h2>
+				<span>已经完成</span>
+				<div class="sum"  v-cloak> {{ doneList.length }} </div>
+			</h2>
+			<ul class="doneList">
+				<li v-for='(task,taskIndex) in doneList' :key='task.id'>
+					<div>
+						<input type="checkbox" checked @change='check(taskIndex,doneList)' >
+						<span v-cloak> {{ task.text }} </span>
+					</div>
+					<button @click='deleteTask(taskIndex,doneList)'>删除</button>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script>
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				curText: '',
+				doingList: [],
+				doneList: []
+			},
+			methods: {
+				handleInput(e){
+					this.curText = e.target.value;
+				},
+				addTask(){
+					if(this.curText.trim() == ''){ return }
+					this.doingList.push({text:this.curText, id: new Date().getTime()})
+					this.curText = '';
+				},
+				deleteTask(taskIndex,list){
+					vm.$delete(list,taskIndex);
+				},
+				check(taskIndex,list,flag){
+					const checked = list.splice(taskIndex,1);
+					if( flag === 'doing' ){
+						this.doneList.push(...checked);     //将得到的数组展开
+					}else{
+						this.doingList.push(...checked);
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>
