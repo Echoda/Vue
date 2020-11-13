@@ -1,0 +1,28 @@
+#app{
+	display: flex;
+	justify-content: space-between;
+	width: 1000px;
+	margin:5px auto;
+	border: 1px solid #333;
+	border-radius: 5px;
+}
+#app .area:first-child{
+	border-right: 1px dotted #333;
+}
+.area{
+	width: 50%;
+	padding: 10px 20px;
+}
+h3{
+	text-align: center;
+}
+h5{
+	margin: 15px 0;
+}
+input{
+	margin: 5px 0;
+}
+textarea{
+	outline: none;
+	border-radius: 5px;
+}
