@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="index.css">
+	<script src="../vue.js"></script>
+	<script src="jquery.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div class="logo">
+			<img src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" title="点击一下，了解更多">
+		</div>
+		<div class="search-main">
+			<div class="search-box">
+				<span class="search-area">
+					<input type="text" maxlength="100" v-model='inpVal'
+					@focus='()=>isFocus=true' @blur='()=>isFocus=false'>
+					<span class="icon icon-paizhao"></span>
+				</span>
+				<button class="search-btn">百度一下</button>
+			</div>
+			<ul class="search-list" 
+			v-show='isFocus && searchResList.length'>
+				<li v-for='res in searchResList' :key='res'> {{ res }} </li>
+			</ul>
+		</div>
+	</div>
+	<script>
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				searchResList:[],
+				inpVal: '',
+				isFocus: false
+			},
+			methods: {
+				searchRes(res){
+					console.log(res);
+					this.searchResList = res.s;
+				}
+			},
+			watch: {
+				inpVal(){
+		            $.ajax({
+			            dataType: 'jsonp',
+			            url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',
+				        data: {
+				            wd: this.inpVal,
+				            cb: 'vm.searchRes'
+				        }
+		          });
+				}
+			}
+		})
+	</script>
+</body>
+</html>

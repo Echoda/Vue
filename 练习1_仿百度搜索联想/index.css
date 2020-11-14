@@ -1,0 +1,102 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+@font-face {
+  font-family: 'iconfont';  /* project id 1511900 */
+  src: url('./font/iconfont.eot');
+  src: url('./font/iconfont.eot?#iefix') format('embedded-opentype'),
+  url('./font/iconfont.woff2') format('woff2'),
+  url('./font/iconfont.woff') format('woff'),
+  url('./font/iconfont') format('truetype'),
+  url('./font/iconfont.svg#iconfont') format('svg');
+}
+#app{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 45px auto;
+}
+.logo{
+	text-align: center;
+	margin-bottom: 15px;
+}
+.logo img{
+	width: 270px;
+	height: 129px;
+}
+
+.search-main{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+.search-box{
+	display: flex;
+	align-items: center;
+	font-size: 0;
+}
+.search-area{
+	position: relative;
+}
+.search-area input{
+	width: 548px;
+	height: 44px;
+	box-sizing: border-box;
+	padding: 12px 48px 12px 16px;
+	border: 2px solid #c4c7ce;
+	border-right: 0;
+	border-radius: 10px 0 0 10px;
+	font-size: 16px;
+	outline: none;
+}
+.search-area input:focus{
+	border: 2px solid #4e6ef2;
+}
+.icon {
+    font-family: 'iconfont' !important;
+}
+.icon-paizhao:before {
+    content: "\e66f";
+}
+.icon-paizhao{
+  position: absolute;
+  top: 50%;
+  margin-top: -8px;
+  right: 11px;
+  font-size: 22px;
+  color: #afafaf;
+  font-weight: 400;
+  line-height: 16px;
+  cursor: pointer;
+}
+.icon-paizhao:hover{
+	color: #4e6ef2;
+}
+.search-btn{
+	width: 108px;
+	height: 44px;
+	box-sizing: border-box;
+	background-color: #4e6ef2;
+	border-radius: 0 10px 10px 0;
+	color: #fff;
+	font-size: 17px;
+	font-weight: 400;
+	outline: none;
+	border: 0;
+	cursor: pointer;
+}
+/*列表区*/
+li{
+	list-style: none;
+	text-align: left;
+	margin: 5px 0;
+}
+.search-list{
+	width: 548px;
+	box-sizing: border-box;
+	padding: 5px 12px;
+	border: 2px solid #c4c7ce;
+	border-radius: 10px;
+}
