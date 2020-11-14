@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../vue.js"></script>
+	<link rel="stylesheet" href="index.css">
+</head>
+<body>
+	<div id="app">
+		<div class="control">
+			<input type="text" class="search" v-model.trim='filterText'>
+			<div>
+				<span class="option" :class='{active: option.isActive}'
+				v-for='(option,index) in sexOptions' @click='handleClick(index)'> {{ option.sex }} </span>
+			</div>
+		</div>
+		<!-- 用户列表 -->
+		<ul>
+			<li class="person" v-for='person in filterPerson' :key='person.id'>
+				<div class="avatar">
+					<img :src="person.src">
+				</div>
+				<div class="content">
+					<span class="name"> {{ person.name }} </span>
+					<span class="des"> {{ person.des }} </span>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<script>
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				filterText: '',
+				activeSex: 'All',
+				sexOptions:[
+				{sex: 'Male', isActive: false},
+				{sex: 'Female', isActive: false},
+				{sex: 'All', isActive: true}
+				],
+				personArr: [
+				  { 
+				    name: '王港', 
+				    src: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=4005587090,2408158268&fm=26&gp=0.jpg', 
+				    des: '颈椎不好', 
+				    sex: 'm', 
+				    id: '056482' 
+				  },
+				  { 
+				    name: '刘莹', 
+				    src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571915784984&di=a0056fd06188e87b922c60878e5ce6e2&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F03%2F79%2F64%2F5c05df1faf3b7_610.jpg', 
+				    des: '我是谁', 
+				    sex: 'f', 
+				    id: '157894' 
+				  },
+				  { 
+				    name: '刘秀莹', 
+				    src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571915803971&di=47dc968f55b16a461de3e8f25bdf8600&imgtype=0&src=http%3A%2F%2Fimg.duoziwang.com%2F2016%2F11%2F27%2F190426198344.jpg', des: '我长得很好看', 
+				    sex: 'f', 
+				    id: '2849245' 
+				  },
+				  { 
+				    name: '刘金雷', 
+				    src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571915748758&di=5be825da4d37bcc21959946c101d5609&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201707%2F19%2F20170719211350_4PnBt.jpeg', 
+				    des: '你没有见过陌生的脸', 
+				    sex: 'm', 
+				    id: '348515' 
+				  },
+				  { 
+				    name: '刘飞翔', 
+				    src: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571915762633&di=49517ca62ecddb638cdfb2158a64e39a&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201702%2F05%2F20170205222154_WLdJS.jpeg', 
+				    des: '瓜皮刘', 
+				    sex: 'm', 
+				    id: '478454'
+				  }
+				]
+			},
+			methods: {
+				handleClick(index){
+					const sexOptions = this.sexOptions;
+					for(var i = 0;i < sexOptions.length;i ++){
+						sexOptions[i].isActive = false;
+					}
+					sexOptions[index].isActive = true;
+					this.activeSex = sexOptions[index].sex;
+				}
+			},
+			computed: {
+				filterPerson(){
+					const { personArr, activeSex, filterText} = this;
+					return personArr.filter( item => {
+						switch (activeSex) {
+							case 'Male':
+								return item.sex === 'm' && item.name.includes(filterText);
+								break;
+							case 'Female':
+								return item.sex === 'f' && item.name.includes(filterText);
+								break;
+							default:
+								return item.name.includes(filterText);
+						}
+					})
+				}
+			}
+		})
+	</script>
+</body>
+</html>
