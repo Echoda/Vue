@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		{{ msg }}
+		<div @click='handleClick'>点击事件</div>
+	</div>
+	<script>
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				msg: 'sun',
+				timer: null
+			},
+			methods: {
+				handleClick(){
+					console.log('click')
+				}
+			},
+			watch: {
+				msg: {
+					handler(){
+						console.log('侦听msg');
+					},
+					immediate: true
+				}
+			},
+			beforeCreate(){
+				console.log(this.msg);
+				console.log(this.handleClick);
+				console.log('---beforeCreate---');
+			},
+			created(){
+				console.log(this.msg);
+				console.log(this.handleClick);
+				console.log('---created---');
+
+				this.timer = setInterval( () => {
+					console.log(1);
+				},500);
+			},
+			beforeMount(){
+				console.log(this.$el);
+				console.log('---beforeMount---')
+			},
+			mounted(){
+				console.log(this.$el);
+				console.log('---mounted---')
+			},
+			beforeUpdate(){
+				console.log(this.msg);
+				console.log(this.$el.innerHTML);
+				console.log('---beforeUpdate---');
+			},
+			updated(){
+				console.log(this.$el.innerHTML);
+				console.log('---updated---');
+			},
+			beforeDestroy(){
+				clearInterval(this.timer);
+				console.log('---beforeDestroy---');
+			},
+			destroyed(){
+				console.log(this.msg);
+				console.log(this.handleClick);
+				console.log('---destroyed---');
+				// 此时仍然可用拿到数据，但监听器已失效
+			}
+		}) 
+		vm.msg = 'echo';
+		vm.$destroy();
+	</script>
+</body>
+</html>
