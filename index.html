@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="index.css">
+	<script src="axios.js"></script>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div class="username">
+			<input type="text" placeholder="用户名" v-model='username'>
+		</div>
+		<div class="email">
+			<input type="text" placeholder="邮箱" v-model='email'>
+		</div>
+		<div class="upload-btn" @click='upload'>上传</div>
+		<div class="show-btn" @click='show'>显示人物信息</div>
+		<ul class="person-list" v-show='personList.length'>
+			<li class="person" v-for='person in personList'>
+				<span> {{ person.name }} </span>
+				<span> {{ person.mail }} </span>
+			</li>
+		</ul>
+	</div>
+	<script>
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				personList: [],
+				username: '',
+				email: '',
+				msg: ''
+			},
+			methods: {
+				upload(){
+					const {username, email} = this;
+
+					if( !username || !email){
+						return;
+					}
+					axios('/setUserInfo',{
+						method: 'post',
+						baseURL: 'https://developer.duyiedu.com/vue',
+						data: {name: username,mail: email}
+					}).then( res=> {
+						this.msg = res.data.msg;
+						// console.log(res);
+					});
+					this.username = this.email = '';
+				},
+				show(){
+					axios({
+						method:'get',
+						baseURL: 'https://developer.duyiedu.com/vue',
+						url: '/getUserInfo'
+					}).then( res=> {
+						// console.log(res);
+						this.personList = res.data.data.slice(0,10);
+					})
+				}
+			},
+			watch: {
+				msg(){
+					const msg = this.msg;
+					if(msg == ''){
+						return
+					}
+					alert(msg);
+					this.msg = '';
+				}
+			}
+		})
+	</script>
+</body>
+</html>

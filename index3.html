@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="index.css">
+	<script src="axios.js"></script>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div class="username">
+			<input type="text" placeholder="用户名" v-model='username'>
+		</div>
+		<div class="email">
+			<input type="text" placeholder="邮箱" v-model='email'>
+		</div>
+		<div class="upload-btn" @click='upload'>上传</div>
+		<div class="show-btn" @click='show'>显示人物信息</div>
+		<ul class="person-list" v-show='personList.length'>
+			<li class="person" v-for='person in personList'>
+				<span> {{ person.name }} </span>
+				<span> {{ person.mail }} </span>
+			</li>
+		</ul>
+		<button @click='cancleReq'>取消请求</button>
+	</div>
+	<script>
+		// 请求拦截器
+		// axios.interceptors.request.use( config => {
+		// 	config.method = 'post';
+		// 	config.baseURL = 'https://xxx.com/vue';
+		// 	return config;
+		// });
+
+		// 响应拦截器
+		// const myInterceptor = axios.interceptors.response.use( response => {
+		// 	response.statusText = '响应拦截';
+		// 	console.log(response);
+		// 	return response;
+		// });
+
+		// 取消拦截器
+		// axios.interceptors.response.eject(myInterceptor);
+
+		//拦截器处理错误
+		axios.interceptors.response.use( response => {
+			response.statusText = '响应拦截';
+			console.log(response);
+			return response;
+		}, error => {
+			console.log(error.config);
+			if(error.response){
+				console.log('响应时错误')
+			}else if(error.request){
+				console.log('请求时错误')
+			}else{
+				console.log('请求未发出')
+			}
+			return Promise.reject(error);
+		});
+
+
+		// 取消请求
+		const source = axios.CancelToken.source();
+		console.log(source);
+
+		const vm = new Vue({
+			el: '#app',
+			data: {
+				personList: [],
+				username: '',
+				email: '',
+				msg: ''
+			},
+			methods: {
+				upload(){
+					const {username, email} = this;
+					if( !username || !email){
+						return;
+					}
+					axios('/setUserInfo',{
+						method: 'post',
+						baseURL: 'https://developer.duyiedu.com/vue',
+						data: {name: username,mail: email}
+					}).then( res=> {
+						this.msg = res.data.msg;
+					});
+					this.username = this.email = '';
+				},
+				show(){
+					axios({
+						method:'get',
+						baseURL: 'https://developer.duyiedu.com/vue',
+						url: '/getUserInfo',
+						cancelToken: source.token
+					}).then( res=> {
+						this.personList = res.data.data.slice(0,2);
+						console.log(res.data.msg);
+					})
+					// .catch( error => {
+					// 	console.log(error.config);
+					// 	if(error.response){
+					// 		console.log('响应时错误')
+					// 	}else if(error.request){
+					// 		console.log('请求时错误')
+					// 	}else{
+					// 		console.log('请求未发出')
+					// 	}
+					// })
+				},
+				cancleReq(){
+					source.cancel('取消请求啦');
+				}
+			},
+			watch: {
+				msg(){
+					const msg = this.msg;
+					if(msg == ''){
+						return
+					}
+					alert(msg);
+					this.msg = '';
+				}
+			}
+		})
+	</script>
+</body>
+</html>

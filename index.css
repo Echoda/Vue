@@ -1,0 +1,48 @@
+li{
+	list-style: none;
+}
+#app{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 50px;
+}
+input[type=text]{
+    width: 284px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    padding: 10px 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    color: #666;
+    outline: none;
+}
+.upload-btn,
+.show-btn{
+	width: 284px;
+	height: 40px;
+	line-height: 40px;
+	background-color: #3f89ec;
+	color: #fff;
+	text-align: center;
+	border-radius: 3px;
+	margin-bottom: 10px;
+    cursor: pointer;
+}
+.person-list{
+	width: 284px;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	border-bottom: none;
+	padding: 0;
+	margin: 0;
+}
+.person-list li{
+	padding: 5px 5px;
+	border-bottom: 1px solid #ddd
+}
+.person-list li span:first-child{
+	margin: 0 10px;
+	border-right: 1px dotted #ddd;
+}
