@@ -69,7 +69,8 @@
 				console.log(this.msg);
 				console.log(this.handleClick);
 				console.log('---destroyed---');
-				// 此时仍然可用拿到数据，但监听器已失效
+				// 此时仍然可用拿到数据，且dom存在，但无法通过数据更改视图，且监听器已失效
+				// 官方推荐使用v-if的方式去控制是否销毁
 			}
 		}) 
 		vm.msg = 'echo';
