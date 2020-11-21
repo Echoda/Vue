@@ -1,0 +1,107 @@
+#app{
+	width: 100%;
+	position: relative;
+}
+/*头部*/
+.header{
+	position: fixed;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 8px 10px;
+	width: 100%;
+	background-color: #fff;
+	z-index: 3;
+}
+.header .logo{
+	margin: 0 100px 0 6px;
+}
+.header .avatar{
+	border-radius: 50%;
+	overflow: hidden;
+}
+.header .download-btn{
+	width: 82px;
+	height: 24px;
+	border-radius: 4px;
+	background-color: #fb7299;
+	color: #fff;
+	text-align: center;
+	margin-right: 21px;
+	font-size: 13px;
+	line-height: 24px;
+}
+
+/*导航栏*/
+.nav-box{
+	position: fixed;
+	height: 40px;
+	width: 100%;
+	margin-top: 47px;
+	box-sizing: border-box;
+	padding-right: 40px;
+	background-color: #fff;
+	z-index: 1;
+}
+.nav-box .nav-list{
+	display: flex;
+	align-items: center;
+	white-space: nowrap;
+	overflow-x: scroll; 
+	height: 100%;
+	color: #505050;
+	font-size: 14px;
+}
+/*隐藏自带滚动条*/
+.nav-box .nav-list::-webkit-scrollbar{
+	display: none;
+}
+.nav-box .nav{
+	padding: 0 16px;
+}
+.down-nav-box .nav-list .nav.active,
+.nav-box .nav-list .nav.active{
+	color: #fb7299;
+}
+.down-btn{
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 40px;
+	height: 40px;
+	background-color: #fff;
+}
+.down-btn svg{
+	margin: 10px;
+}
+/*下拉导航*/
+.down-nav-box{
+	position: absolute;
+	width: 100%;
+	font-family: 'PingFangSC-Regalur';
+	font-weight: 400;
+	box-sizing: border-box;
+	top: -110px;
+	padding: 10px 20px 20px;
+	background-color: #fff;
+	border-top: 1px solid #dadada;
+	transition: top .3s ease-in;
+	z-index: 2;
+}
+.down-nav-box .nav-list{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+.down-nav-box .nav-list .nav{
+	margin: 7px;
+	font-size: 14px;
+	line-height: 27px;
+	color: #757575;
+}
+.up-btn{
+	position: absolute;
+	bottom: 0px;
+	left: 50%;
+	transform: translateX(-50%);
+}
